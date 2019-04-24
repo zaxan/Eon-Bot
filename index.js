@@ -1,21 +1,27 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const Config = require('./config.json');
 const Steem = require('steem');
-
-client.login(Config.token);
-
 
 client.on('ready', () => {
   console.log("¡Preparado para la acción!");
-  var channel = client.channels.get('482703235862495242'); // put channel id here...
+  var voteFeed = client.channels.get('482703235862495242');
+  var reportFeed = client.channels.get('427882327008346112');
   Steem.api.streamTransactions('head', (error, result) => {
     let txType = result.operations[0][0]
     let txData = result.operations[0][1]
 
+    if (txType == "comment" && txData.author == "stellae" && txData.parent_author == "") {
+      reportFeed.send("Reporte de Curación https://steemit.com/@"+txData.author+"/"+txData.permlink);
+    }
+    if (txType == "comment" && txData.author == "elarca" && txData.parent_author == "") {
+      reportFeed.send("@notificARTE Nueva publicación de nuestro proyecto https://steemit.com/@"+txData.author+"/"+txData.permlink);
+    }
+    if (txType == "comment" && txData.author == "elarca.play" && txData.parent_author == "") {
+      reportFeed.send("Reporte diario de partidas Steem Monsters https://steemit.com/@"+txData.author+"/"+txData.permlink);
+    }
     if (txType == "vote" && txData.voter == "stellae") {
       let vote_w = txData.weight/100;
-      channel.send("Articulo votado por el equipo de Curación STELLAE: https://steemit.com/@"+txData.author+"/"+txData.permlink+" Porcentaje: "+vote_w+"% del Poder de voto.");
+      voteFeed.send("Articulo votado por el equipo de Curación STELLAE: https://steemit.com/@"+txData.author+"/"+txData.permlink+" Porcentaje: "+vote_w+"% del Poder de voto.");
     }
   });
 });
@@ -48,3 +54,5 @@ client.on("message", (message) => {
     message.channel.send("¡Buenas noches arcan@!");
   }
  });
+
+client.login(process.env.TOKEN);
