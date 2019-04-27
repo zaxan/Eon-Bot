@@ -22,14 +22,14 @@ client.on('ready', () => {
     if (txType == "comment" && txData.author == "elarca" && txData.parent_author == "") {
       var formatted = txData.author + txData.permlink;
       if (!alreadySentPosts.includes(formatted)){
-        reportFeed.send("@notificARTE Nueva publicación de nuestro proyecto https://steemit.com/@"+txData.author+"/"+txData.permlink);
+        reportFeed.send("Nueva publicación de nuestro proyecto https://steemit.com/@"+txData.author+"/"+txData.permlink);
         alreadySentPosts.push(formatted)
       }
     }
     if (txType == "comment" && txData.author == "elarca.play" && txData.parent_author == "") {
       var formatted = txData.author + txData.permlink;
       if (!alreadySentPosts.includes(formatted)){
-        reportFeed.send("Reporte diario de partidas Steem Monsters https://steemit.com/@"+txData.author+"/"+txData.permlink);
+        reportFeed.send("Reporte de partidas Steem Monsters https://steemit.com/@"+txData.author+"/"+txData.permlink);
         alreadySentPosts.push(formatted)
       }
     }
