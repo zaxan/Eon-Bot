@@ -5,8 +5,8 @@
   "main": "bot.js",
   "author": "zaxan",
   "dependencies": {
-    "discord.js": "^11.4.2",
+    "discord.js": "^11.5.1",
     "discord.js-commando": "^0.10.0",
-    "steem": "^0.7.1"
+    "steem": "^0.7.5"
   }
 }
