@@ -6,8 +6,8 @@ var alreadySentPosts = [];
 
 client.on('ready', () => {
   console.log("¡Bot On!");
-  var voteFeed = client.channels.get('482703235862495242');
-  var reportFeed = client.channels.get('427882327008346112');
+  var voteFeed = client.channels.get('885193738614345768');
+  var reportFeed = client.channels.get('871150645103706144');
   Steem.api.streamTransactions('head', (error, result) => {
     let txType = result.operations[0][0];
     let txData = result.operations[0][1];
