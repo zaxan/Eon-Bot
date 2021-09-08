@@ -5,37 +5,23 @@ const Steem = require('steem');
 var alreadySentPosts = [];
 
 client.on('ready', () => {
-  console.log("¡Preparado para la acción!");
+  console.log("¡Bot On!");
   var voteFeed = client.channels.get('482703235862495242');
   var reportFeed = client.channels.get('427882327008346112');
   Steem.api.streamTransactions('head', (error, result) => {
     let txType = result.operations[0][0];
     let txData = result.operations[0][1];
 
-    if (txType == "comment" && txData.author == "stellae" && txData.parent_author == "") {
+    if (txType == "comment" && txData.author == "fundacoven" && txData.parent_author == "") {
       var formatted = txData.author + txData.permlink;
       if (!alreadySentPosts.includes(formatted)){
-        reportFeed.send("Reporte de Curación https://steemit.com/@"+txData.author+"/"+txData.permlink);
+        reportFeed.send("New post from project https://steemit.com/@"+txData.author+"/"+txData.permlink);
         alreadySentPosts.push(formatted)
       }
     }
-    if (txType == "comment" && txData.author == "elarca" && txData.parent_author == "") {
-      var formatted = txData.author + txData.permlink;
-      if (!alreadySentPosts.includes(formatted)){
-        reportFeed.send("Nueva publicación de nuestro proyecto https://steemit.com/@"+txData.author+"/"+txData.permlink);
-        alreadySentPosts.push(formatted)
-      }
-    }
-    if (txType == "comment" && txData.author == "elarca.play" && txData.parent_author == "") {
-      var formatted = txData.author + txData.permlink;
-      if (!alreadySentPosts.includes(formatted)){
-        reportFeed.send("Reporte de partidas Steem Monsters https://steemit.com/@"+txData.author+"/"+txData.permlink);
-        alreadySentPosts.push(formatted)
-      }
-    }
-    if (txType == "vote" && txData.voter == "stellae") {
+    if (txType == "vote" && txData.voter == "fundacoven") {
       let vote_w = txData.weight/100;
-      voteFeed.send("Articulo votado por el equipo de Curación STELLAE: https://steemit.com/@"+txData.author+"/"+txData.permlink+" Porcentaje: "+vote_w+"% del Poder de voto.");
+      voteFeed.send("New post upvoted: https://steemit.com/@"+txData.author+"/"+txData.permlink+" Porcentaje: "+vote_w+"% del Poder de voto.");
     }
   });
 });
@@ -56,7 +42,7 @@ client.on("message", (message) => {
         });
   } else
   if (message.content.startsWith("buenos dias")) {
-    message.channel.send("¡Buenos días arcan@!");
+    message.channel.send("¡Buenos días!");
   }
   if (message.content.startsWith("¿Como estan?")) {
     message.channel.send("¿Excelente y tu?");
@@ -65,7 +51,7 @@ client.on("message", (message) => {
     message.channel.send("Visita el canal #❓-dudas-help para cualquier información");
   }
   if (message.content.startsWith("buenas noches")) {
-    message.channel.send("¡Buenas noches arcan@!");
+    message.channel.send("¡Buenas noches!");
   }
  });
 
